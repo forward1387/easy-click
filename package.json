@@ -1,0 +1,25 @@
+{
+  "name": "easy-click",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "eslint": "./node_modules/.bin/eslint '**/*.js' --ignore-pattern '!.eslintrc.js'",
+    "test": "npm run eslint && ./node_modules/.bin/cucumber-js ./features/**/*.feature -r ./spec"
+  },
+  "keywords": [
+    "puppeteer",
+    "puppeteer-firefox",
+    "cucumber"
+  ],
+  "author": "Yuriy Oprysk (yuriy.oprysk@gmail.com)",
+  "license": "ISC",
+  "dependencies": {
+    "cucumber": "^5.1.0",
+    "dotenv": "^8.0.0",
+    "eslint": "^5.16.0",
+    "puppeteer": "^1.17.0",
+    "puppeteer-firefox": "^0.5.0",
+    "wait-promise": "^0.4.1"
+  }
+}
