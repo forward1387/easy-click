@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "eslint": "./node_modules/.bin/eslint '**/*.js' --ignore-pattern '!.eslintrc.js'",
-    "test": "npm run eslint && ./node_modules/.bin/cucumber-js ./features/**/*.feature -r ./spec"
+    "eslint": "./node_modules/.bin/eslint '**/*.js' --ignore-pattern '!.eslintrc.js' --fix",
+    "pretest": "npm install && npm run eslint && mkdirp ./reports",
+    "test": "./node_modules/.bin/cucumber-js ./features/**/*.feature -r ./spec -f json:reports/report.json",
+    "report": "node report.js"
   },
   "keywords": [
     "puppeteer",
@@ -15,11 +17,17 @@
   "author": "Yuriy Oprysk (yuriy.oprysk@gmail.com)",
   "license": "ISC",
   "dependencies": {
+    "amp-site-validator": "^3.0.0",
+    "chai": "^4.2.0",
+    "chai-string": "^1.5.0",
     "cucumber": "^5.1.0",
+    "cucumber-html-reporter": "^5.0.0",
     "dotenv": "^8.0.0",
     "eslint": "^5.16.0",
+    "mkdirp": "^0.5.1",
     "puppeteer": "^1.17.0",
     "puppeteer-firefox": "^0.5.0",
+    "underscore": "^1.9.1",
     "wait-promise": "^0.4.1"
   }
 }

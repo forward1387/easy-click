@@ -1,0 +1,29 @@
+version: "3"
+services:
+  aqa-desktop:
+    build: .
+    environment:
+      - BASE_URL=https://www.wikipedia.org
+    volumes:
+      - ./reports:/easy-click/reports
+    command: npm run test
+
+  aqa-tablet:
+    build: .
+    environment:
+      - IS_DEVICE_MODE=true
+      - DEVICE=iPad
+      - BASE_URL=https://www.wikipedia.org
+    volumes:
+      - ./reports:/easy-click/reports
+    command: npm run test
+
+  aqa-mobile:
+    build: .
+    environment:
+      - IS_DEVICE_MODE=true
+      - DEVICE=iPad
+      - BASE_URL=https://www.wikipedia.org
+    volumes:
+      - ./reports:/easy-click/reports
+    command: npm run test

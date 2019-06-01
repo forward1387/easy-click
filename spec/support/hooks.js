@@ -1,9 +1,21 @@
 'use strict';
 
 const { After, Before, AfterAll } = require('cucumber'),
+	{getBrowserWidth, getBrowserHeight} = require('../support/conf'),
 	scope = require('./scope');
     
-Before(async () => {});
+Before(async () => {
+	if (!scope.browser) {
+		scope.browser = await scope.puppeteer.launch({
+			headless: false,
+			ignoreHTTPSErrors: true,
+			args: ['--no-sandbox'
+				, '--disable-setuid-sandbox'
+				, `--window-size=${getBrowserWidth()},${getBrowserHeight()}`
+			]
+		});
+	}
+});
     
 After(async (scenario) => {
 	if(scenario.result.status === 'failed') {
