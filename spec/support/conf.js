@@ -1,32 +1,32 @@
 'use strict';
-const _ = require('underscore');
+const {log} = require('./log');
 
 exports.isHeadless = () => {
-	if(!_.has(process.env, 'HEADLESS')) return true;
-
-	return Boolean(process.env.HEADLESS);
+	let headless = process.env.HEADLESS || 'true';
+	log.debug(`export HEADLESS=${headless}`);
+	return JSON.parse(headless);
 };
 
 exports.isDevice = () => {
-	if(!_.has(process.env, 'IS_DEVICE_MODE')) return false;
-
-	return Boolean(process.env.IS_DEVICE_MODE);
+	let boolString = process.env.IS_DEVICE_MODE || 'false';
+	log.debug(`export IS_DEVICE_MODE=${boolString}`);
+	return JSON.parse(boolString);
 };
 
 exports.getDevice = () => {
-	if(!_.has(process.env, 'DEVICE')) return 'iPhone X';
-
-	return process.env.DEVICE;
+	let device = process.env.DEVICE || 'iPhone X';
+	log.debug(`export DEVICE=${device}`);
+	return device;
 };
 
 exports.getBrowserWidth = () => {
-	if(!_.has(process.env, 'BROWSER_WIDTH')) return 1024;
-
-	return Number(process.env.BROWSER_WIDTH);
+	let width = process.env.BROWSER_WIDTH || '1024';
+	log.debug(`export BROWSER_WIDTH=${width}`);
+	return Number(width);
 };
 
 exports.getBrowserHeight = () => {
-	if(!_.has(process.env, 'BROWSER_HEIGHT')) return 1400;
-
-	return Number(process.env.BROWSER_HEIGHT);
+	let height = process.env.BROWSER_HEIGHT || '1440';
+	log.debug(`export BROWSER_HEIGHT=${height}`);
+	return Number(height);
 };

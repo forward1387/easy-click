@@ -5,6 +5,7 @@ const { Given, When, Then} = require('cucumber'),
 	{scrollUp, scrollDown} = require('../actions/browser.actions'),
 	{isDevice, getDevice} = require('../support/conf'),
 	devices = require('puppeteer/DeviceDescriptors'),
+	{getBrowserWidth, getBrowserHeight} = require('../support/conf'),
 	{urlEndsWith, urlStartsWith, urlEqual, validateAmp} = require('../validators/browser.validators');
 
 Given(/^I am on the '(.*)' page$/, async (path) => {
@@ -12,6 +13,8 @@ Given(/^I am on the '(.*)' page$/, async (path) => {
 
 	if (isDevice()) {
 		await scope.page.emulate(devices[getDevice()]);
+	} else {
+		scope.page.setViewport({width: getBrowserWidth(), height: getBrowserHeight()});
 	}
 
 	await scope.page.goto(process.env.BASE_URL + path);
@@ -28,4 +31,3 @@ Then(/^browser url (ends with|starts with|equal to) '(.*)'$/, (cond, value) => {
 });
 
 Then(/^page check by amp validator$/, validateAmp);
-
