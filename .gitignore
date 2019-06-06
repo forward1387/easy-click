@@ -64,3 +64,6 @@ package-lock.json
 
 #Reports
 reports/
+
+#Images
+images/

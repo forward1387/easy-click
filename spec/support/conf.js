@@ -30,3 +30,9 @@ exports.getBrowserHeight = () => {
 	log.debug(`export BROWSER_HEIGHT=${height}`);
 	return Number(height);
 };
+
+exports.getImageLocationAbsolutePath = () => {
+	let path = process.env.IMAGES_LOCATION || __dirname;
+	log.debug(`export IMAGES_LOCATION=${path}`);
+	return path;
+};

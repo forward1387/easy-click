@@ -19,7 +19,9 @@ Before(async () => {
     
 After(async (scenario) => {
 	if(scenario.result.status === 'failed') {
-		if (scope.browser && scope.page) {
+		if (scope.diff) {
+			scope.attach(scope.diff, 'image/png');
+		} else if (scope.browser && scope.page) {
 			scope.attach(await scope.page.screenshot(), 'image/png');
 		}
 	}
