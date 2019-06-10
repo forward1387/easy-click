@@ -1,5 +1,6 @@
 'use strict';
-const scope = require('../support/scope');
+const scope = require('../support/scope'),
+	{log} = require('../support/log');
 
 exports.scrollUp = async () => {
 	await scope.page.evaluate(() => window.scrollTo(0, 0));
@@ -20,5 +21,17 @@ exports.scrollDown = async () => {
 				}
 			}, 100);
 		});
+	});
+};
+
+exports.startListenEvent = (event) => {
+	scope.page.on(event, (ev) => {
+		scope.events[event].push(ev);
+	});
+};
+
+exports.stopListenEvent = (event) => {
+	scope.page.removeListener(event, (ev) => {
+		log.info(ev.toString());
 	});
 };
