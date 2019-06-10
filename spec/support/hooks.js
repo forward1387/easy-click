@@ -3,7 +3,7 @@
 const { After, Before, AfterAll } = require('cucumber'),
 	{isHeadless, getBrowserWidth, getBrowserHeight} = require('../support/conf'),
 	scope = require('./scope');
-    
+
 Before(async () => {
 	if (!scope.browser) {
 		scope.browser = await scope.puppeteer.launch({
@@ -16,7 +16,7 @@ Before(async () => {
 		});
 	}
 });
-    
+
 After(async (scenario) => {
 	if(scenario.result.status === 'failed') {
 		if (scope.diff) {

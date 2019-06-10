@@ -8,3 +8,10 @@ Feature: Demo Feature
         And I wait a 2 seconds
         Then browser url equal to 'https://www.wikipedia.org/'
         And '#searchInput' element should be the same look as search image
+
+    Scenario: Demo Fail Scenario
+        Given I open page url 'https://www.pgatour.com/'
+        When I wait a 10 seconds
+        Then page view should be the same look as main image
+        And page full should be the same look as main image
+        And browser url equal to 'https://www.google.com/'

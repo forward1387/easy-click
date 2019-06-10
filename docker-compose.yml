@@ -4,8 +4,10 @@ services:
     build: .
     environment:
       - BASE_URL=https://www.wikipedia.org
+      - IS_DEVICE_MODE=false
     volumes:
       - ./reports:/easy-click/reports
+      - ./images:/easy-click/images
     command: npm run test
 
   aqa-tablet:
@@ -14,8 +16,10 @@ services:
       - IS_DEVICE_MODE=true
       - DEVICE=iPad
       - BASE_URL=https://www.wikipedia.org
+      - IMAGES_LOCATION=/easy-click/images
     volumes:
       - ./reports:/easy-click/reports
+      - ./images:/easy-click/images
     command: npm run test
 
   aqa-mobile:
@@ -26,4 +30,5 @@ services:
       - BASE_URL=https://www.wikipedia.org
     volumes:
       - ./reports:/easy-click/reports
+      - ./images:/easy-click/images
     command: npm run test

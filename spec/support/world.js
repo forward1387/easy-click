@@ -12,6 +12,11 @@ const World = function({attach, parameters}) {
 	scope.puppeteer = require('puppeteer');
 	scope.expect = chai.expect;
 	require('dotenv').config();
+	scope.events = {
+		request: [],
+		response:[],
+		pageerror: []
+	};
 };
 
 setWorldConstructor(World);
