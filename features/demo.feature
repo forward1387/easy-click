@@ -10,8 +10,10 @@ Feature: Demo Feature
         And '#searchInput' element should be the same look as search image
 
     Scenario: Demo Fail Scenario
-        Given I open page url 'https://www.pgatour.com/'
+        Given I start listen web-page 'response' resourse where url start with 'https://www.wikipedia.org'
+        And I start listen web-page 'pageerror' resourse
+        And I open page url 'https://www.google.com'
         When I wait a 10 seconds
-        Then page view should be the same look as main image
-        And page full should be the same look as main image
-        And browser url equal to 'https://www.google.com/'
+        Then listen web-page response resourses should be empty
+        And listen web-page pageerror resourses should be empty
+        And listen web-page response resourses should not be empty
