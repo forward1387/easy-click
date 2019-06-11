@@ -15,6 +15,8 @@ Before(async () => {
 			]
 		});
 	}
+	
+	scope.page = await scope.browser.newPage();
 });
 
 After(async (scenario) => {

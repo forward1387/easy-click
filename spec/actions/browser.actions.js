@@ -26,12 +26,17 @@ exports.scrollDown = async () => {
 
 exports.startListenEvent = (event) => {
 	scope.page.on(event, (ev) => {
+		log.debug(ev.url());
 		scope.events[event].push(ev);
 	});
 };
 
+exports.startListenEventWithFilter = (event, filter) => {
+	scope.page.on(event, (ev) => filter(event, ev));
+};
+
 exports.stopListenEvent = (event) => {
 	scope.page.removeListener(event, (ev) => {
-		log.info(ev.toString());
+		log.debug(ev.toString());
 	});
 };
