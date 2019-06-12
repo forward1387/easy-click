@@ -19,6 +19,7 @@ const World = function({attach, parameters}) {
 		response:[],
 		pageerror: []
 	};
+	global.scope = scope;
 };
 
 setWorldConstructor(World);
