@@ -5,11 +5,13 @@ const { setWorldConstructor, setDefaultTimeout } = require('cucumber'),
 	chai = require('chai');
 
 chai.use(require('chai-string'));
+chai.use(require('chai-http'));
 
 const World = function({attach, parameters}) {
 	scope.attach = attach;
 	scope.parameters = parameters;
 	scope.puppeteer = require('puppeteer');
+	scope.chai = chai;
 	scope.expect = chai.expect;
 	require('dotenv').config();
 	scope.events = {

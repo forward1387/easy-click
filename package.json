@@ -1,6 +1,6 @@
 {
   "name": "easy-click",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,7 @@
   "dependencies": {
     "amp-site-validator": "^3.0.0",
     "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "chai-string": "^1.5.0",
     "cucumber": "^5.1.0",
     "cucumber-html-reporter": "^5.0.0",
