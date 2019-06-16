@@ -1,6 +1,7 @@
 'use strict';
 const scope = require('../support/scope'),
-	{log} = require('../support/log');
+	{log} = require('../support/log'),
+	_ = require('underscore');
 
 exports.scrollUp = async () => {
 	await scope.page.evaluate(() => window.scrollTo(0, 0));
@@ -39,4 +40,12 @@ exports.stopListenEvent = (event) => {
 	scope.page.removeListener(event, (ev) => {
 		log.debug(ev.toString());
 	});
+};
+
+exports.deleteCookie = async (cookie) => {
+	const cookies = await scope.page.cookies();
+
+	scope.expect(_.findWhere(cookies, {name: cookie}), `Cookie '${cookie}' does not exist.`).to.not.equal(undefined);
+	let cookieEl = _.findWhere(cookies, {name: cookie});
+	await scope.page.deleteCookie(cookieEl);
 };
