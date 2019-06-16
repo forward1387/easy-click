@@ -42,10 +42,13 @@ exports.checkElementChecked = async (locator, checked) => {
 };
 
 exports.checkElementEnabled = async (locator, enabled) => {
+	log.debug(enabled);
+	log.debug(`Element(${locator}) ${enabled? 'is': 'is not'} enabled`);
 	scope.expect(await scope.page.$eval(locator, el => el.disabled), `Element('${locator}') should${enabled?'':' not'} be enabled on page`).to.eql(!enabled);
 };
 
 exports.checkElementExist = async (locator, exists) => {
+	log.debug(`Element(${locator}) ${exists? 'should': 'should not'} exist`);
 	let elements = await scope.page.$$(locator);
 	scope.expect(elements.length > 0, `Element('${locator}') should${exists?'':' not'} exist on page`).to.eql(exists);
 };

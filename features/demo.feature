@@ -14,7 +14,6 @@ Feature: Demo Feature
         And started listen web-page 'pageerror' resourse
         And opened page url 'https://www.google.com'
         When I wait a 10 seconds
-        When I press the Enter key
         Then I expect the collected web-page response resourses is empty
-        And I expect the collected web-page pageerror resourses is empty
         And I expect the collected web-page pageerror resourses is not empty
+
