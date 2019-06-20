@@ -1,7 +1,9 @@
 'use strict';
 const { Then } = require('cucumber'),
 	scope = require('../support/scope'),
-	{shouldBeVisible, checkElementScreen, checkElementChecked, checkElementEnabled, checkElementExist} = require('../validators/element.validators'),
+	{shouldBeVisible, checkElementScreen, checkElementChecked, checkElementEnabled
+		, checkElementExist, checkElementWidth, checkElementHeight
+		, checkElementHeightOneOf, checkElementWidthOneOf} = require('../validators/element.validators'),
 	{checkString, checkStringNotEqual} = require('../validators/string.validators');
 
 Then(/^I expect the '(.*)' element is( not)? visible$/
@@ -33,3 +35,9 @@ Then(/^I expect the element '(.*)' value (ends with|starts with|equal to|contain
 
 Then(/^I expect the element '(.*)' value is not '(.*)'$/
 	, async (locator, value) => checkStringNotEqual(await scope.page.$eval(locator, el => el.value), value));
+
+Then(/^I expect the (width|height) of '(.*)' element is (\d*)$/, (rect, locator, value) => (rect === 'width') ? 
+	checkElementWidth(locator, Number(value)) : checkElementHeight(locator, Number(value)));
+
+Then(/^I expect the (width|height) of '(.*)' element is one of:$/, (rect, locator, datatable) => (rect === 'width') ? 
+	checkElementWidthOneOf(locator, datatable.raw()[0]) : checkElementHeightOneOf(locator, datatable.raw()[0]));

@@ -6,6 +6,8 @@ const { setWorldConstructor, setDefaultTimeout } = require('cucumber'),
 
 chai.use(require('chai-string'));
 chai.use(require('chai-http'));
+chai.use(require('chai-url'));
+chai.use(require('chai-subset'));
 
 const World = function({attach, parameters}) {
 	scope.attach = attach;

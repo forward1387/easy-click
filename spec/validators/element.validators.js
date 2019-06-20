@@ -2,6 +2,7 @@
 const scope = require('../support/scope'),
 	{getDevice, isDevice, getBrowserWidth, getBrowserHeight, getImageLocationAbsolutePath} = require('../support/conf'),
 	fs = require('fs'),
+	_ = require('underscore'),
 	{compare} = require('../support/image'),
 	{log} = require('../support/log');
 
@@ -51,4 +52,36 @@ exports.checkElementExist = async (locator, exists) => {
 	log.debug(`Element(${locator}) ${exists? 'should': 'should not'} exist`);
 	let elements = await scope.page.$$(locator);
 	scope.expect(elements.length > 0, `Element('${locator}') should${exists?'':' not'} exist on page`).to.eql(exists);
+};
+
+let getRect = async (locator) => {
+	return await scope.page.evaluate((locator) => {
+		const element = document.querySelector(locator);
+		var positionInfo = element.getBoundingClientRect();
+		return {width: positionInfo.width, height: positionInfo.height};
+	}, locator);
+};
+
+exports.checkElementWidth = async (locator, width) => {
+	log.debug(`Element(${locator}) should have width: ${width}`);
+	let rect = await getRect(locator);
+	scope.expect(Number(rect.width)).to.eql(width);
+};
+
+exports.checkElementHeight = async (locator, height) => {
+	log.debug(`Element(${locator}) should have height: ${height}`);
+	let rect = await getRect(locator);
+	scope.expect(Number(rect.height)).to.eql(height);
+};
+
+exports.checkElementWidthOneOf = async (locator, listwidth) => {
+	log.debug(`Element(${locator}) should have one of widths: ${JSON.stringify(listwidth)}`);
+	let rect = await getRect(locator);
+	scope.expect(Number(rect.width)).to.be.oneOf(_.map(listwidth, (wd) => Number(wd)));
+};
+
+exports.checkElementHeightOneOf = async (locator, listheight) => {
+	log.debug(`Element(${locator}) should have one of height: ${JSON.stringify(listheight)}`);
+	let rect = await getRect(locator);
+	scope.expect(Number(rect.height)).to.be.oneOf(_.map(listheight, (wd) => Number(wd)));
 };
