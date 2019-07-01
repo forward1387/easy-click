@@ -15,6 +15,14 @@ exports.checkString = (condition, actual, expected) => {
 	}
 };
 
-exports.checkStringNotEqual = (actual, expected) => {
-	return scope.expect(actual).to.not.eql(expected);
+exports.checkNotString = (condition, actual, expected) => {
+	switch(condition) {
+	case 'equal': return scope.expect(actual).to.not.eql(expected);
+	case 'equal ignore case': return scope.expect(actual).to.not.containIgnoreSpaces(expected);
+	case 'equal ignore spaces': return scope.expect(actual).to.not.containIgnoreSpaces(expected);
+	case 'start with': return scope.expect(actual).to.not.containIgnoreSpaces(expected);
+	case 'end with': return scope.expect(actual).to.not.containIgnoreSpaces(expected);
+	case 'contain ignore spaces': return scope.expect(actual).to.not.containIgnoreSpaces(expected);
+	case 'contain ignore case': return scope.expect(actual).to.not.containIgnoreCase(expected);
+	}
 };
