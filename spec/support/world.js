@@ -2,6 +2,7 @@
 
 const { setWorldConstructor, setDefaultTimeout } = require('cucumber'),
 	scope = require('./scope'),
+	{getTimeout} = require('./conf'),
 	chai = require('chai');
 
 chai.use(require('chai-string'));
@@ -22,8 +23,7 @@ const World = function({attach, parameters}) {
 		pageerror: []
 	};
 	global.scope = scope;
+	setDefaultTimeout(getTimeout());
 };
 
 setWorldConstructor(World);
-
-setDefaultTimeout(60000);

@@ -36,3 +36,9 @@ exports.getImageLocationAbsolutePath = () => {
 	log.debug(`export IMAGES_LOCATION=${path}`);
 	return path;
 };
+
+exports.getTimeout = () => {
+	let timeout = Number(process.env.TIMEOUT || '30000');
+	log.debug(`export TIMEOUT=${timeout}`);
+	return timeout;
+};
