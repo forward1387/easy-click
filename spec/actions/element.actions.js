@@ -9,6 +9,7 @@ exports.type = async (locator, value) => {
 };
 
 exports.typeAndWait = async (locator, value, seconds) => {
+	await scope.page.waitFor(locator);
 	await exports.type(locator, value);
 	await wait.sleep(seconds);
 };
@@ -19,6 +20,7 @@ exports.clickOn = async (locator) => {
 };
 
 exports.clickOnAndWait = async (locator, seconds) => {
+	await scope.page.waitFor(locator);
 	await exports.clickOn(locator);
 	await wait.sleep(seconds);
 };

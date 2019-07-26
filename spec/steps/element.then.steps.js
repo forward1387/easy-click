@@ -3,7 +3,8 @@ const { Then } = require('cucumber'),
 	scope = require('../support/scope'),
 	{shouldBeVisible, checkElementScreen, checkElementChecked, checkElementEnabled
 		, checkElementExist, checkElementWidth, checkElementHeight
-		, checkElementHeightOneOf, checkElementWidthOneOf} = require('../validators/element.validators'),
+		, checkElementHeightOneOf, checkElementWidthOneOf
+		, checkElementWithTextExist} = require('../validators/element.validators'),
 	{checkString, checkNotString} = require('../validators/string.validators');
 
 Then(/^I expect the '(.*)' element is( not)? visible$/
@@ -44,3 +45,6 @@ Then(/^I expect the (width|height) of '(.*)' element is one of:$/, (rect, locato
 
 Then(/^I expect the element '(.*)' does not (equal|equal ignore case|equal ignore spaces|start with|end with|contain ignore spaces|contain ignore case) text '(.*)'$/, async (locator, condition, text) => 
 	checkNotString(condition, await scope.page.evaluate(element => element.textContent, await scope.page.$(locator)), text));
+
+Then(/^I expect the element '(.*)' inner text (equal|equal ignore case|equal ignore spaces|start with|end with|contain ignore spaces|contain ignore case) '(.*)'( not)? present$/
+	, async (locator, condition, text, present) => checkElementWithTextExist(locator, condition, text, present?false:true));

@@ -4,6 +4,7 @@ const scope = require('../support/scope'),
 	fs = require('fs'),
 	_ = require('underscore'),
 	{compare} = require('../support/image'),
+	S = require('string'),
 	{log} = require('../support/log');
 
 exports.shouldBeVisible = async (locator, visible) => {
@@ -85,3 +86,29 @@ exports.checkElementHeightOneOf = async (locator, listheight) => {
 	let rect = await getRect(locator);
 	scope.expect(Number(rect.height)).to.be.oneOf(_.map(listheight, (wd) => Number(wd)));
 };
+
+exports.checkElementWithTextExist = async (locator, condition, text, exists) => {
+	log.debug(`Element(${locator}) with text ${condition}: '${text}' ${exists? 'should': 'should not'} exist`);
+
+	let values = await _.map(await scope.page.$$(locator), async (el) => await scope.page.evaluate(element => element.innerHTML, el));
+
+	switch(condition) {
+	case 'ends with': return scope.expect(_.filter(values, (str => S(str).endsWith(text))).length > 0
+		, `Element(${locator}) with text ${condition}: '${text}' ${exists?'should':'should not'} exist`).to.eql(exists);
+	case 'starts with': return scope.expect(_.filter(values, (str => S(str).startsWith(text))).length > 0
+		, `Element(${locator}) with text ${condition}: '${text}' ${exists?'should':'should not'} exist`).to.eql(exists);
+	case 'equal to': return scope.expect(_.filter(values, (str => str === text)).length > 0
+		, `Element(${locator}) with text ${condition}: '${text}' ${exists?'should':'should not'} exist`).to.eql(exists);
+	case 'equal to ignore case': return scope.expect(_.filter(values, (str => str.toLowerCase() === text.toLowerCase())).length > 0
+		, `Element(${locator}) with text ${condition}: '${text}' ${exists?'should':'should not'} exist`).to.eql(exists);
+	case 'equal to ignore spaces': return scope.expect(_.filter(values, (str => S(str).collapseWhitespace().s === S(text).collapseWhitespace().s)).length > 0
+		, `Element(${locator}) with text ${condition}: '${text}' ${exists?'should':'should not'} exist`).to.eql(exists);
+	case 'contains': return scope.expect(_.filter(values, (str => S(str).contains(text))).length > 0
+		, `Element(${locator}) with text ${condition}: '${text}' ${exists?'should':'should not'} exist`).to.eql(exists);
+	case 'contains ignore spaces': return scope.expect(_.filter(values, (str => S(str.toLowerCase()).contains(text.toLowerCase()))).length > 0
+		, `Element(${locator}) with text ${condition}: '${text}' ${exists?'should':'should not'} exist`).to.eql(exists);
+	case 'contains ignore case': return scope.expect(_.filter(values, (str => S(S(str).collapseWhitespace().s).contains(S(text).collapseWhitespace().s))).length > 0
+		, `Element(${locator}) with text ${condition}: '${text}' ${exists?'should':'should not'} exist`).to.eql(exists);
+	}
+};
+
