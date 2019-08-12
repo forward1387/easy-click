@@ -12,3 +12,5 @@ npm run test
 ```
 npm run report
 ```
+
+## Debugging Auto Tests via Visual Studio Code

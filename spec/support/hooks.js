@@ -1,7 +1,7 @@
 'use strict';
 
 const { After, Before, AfterAll } = require('cucumber'),
-	{isHeadless, getBrowserWidth, getBrowserHeight} = require('../support/conf'),
+	{isHeadless, getBrowserWidth, getBrowserHeight, getTimeout} = require('../support/conf'),
 	scope = require('./scope');
 
 Before(async () => {
@@ -17,6 +17,7 @@ Before(async () => {
 	}
 	
 	scope.page = await scope.browser.newPage();
+	scope.page.setDefaultTimeout(getTimeout());
 });
 
 After(async (scenario) => {

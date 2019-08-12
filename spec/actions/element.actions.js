@@ -1,6 +1,10 @@
 'use strict';
 const scope = require('../support/scope'),
-	wait = require('wait-promise');
+	wait = require('wait-promise'),
+	{log} = require('../support/log'),
+	{textStartsWith,textEndsWith,textEqualsTo
+		,textEqualsToIgnoreCase,textEqualsToIgnoreSpaces
+		,textContains,textContainsIgnoreCase,textContainsIgnoreSpaces} = require('../helpers/collection.helper');
 
 exports.type = async (locator, value) => {
 	await scope.page.waitFor(locator);
@@ -46,4 +50,21 @@ exports.pressKey = async (key) => {
 exports.focusAndPressKey = async (locator, key) => {
 	await scope.page.focus(locator); 
 	await scope.page.keyboard.press(key);
+};
+
+exports.clickElementWithText = async (locator, condition, text) => {
+	log.debug(`I click on element(${locator}) which ${condition} '${text}'`);
+
+	let elements = await scope.page.$$(locator);
+
+	switch(condition) {
+	case 'ends with': await textEndsWith(elements, text, async (el) => await el.click()); break;
+	case 'starts with': await textStartsWith(elements, text, async (el) => await el.click()); break;
+	case 'equals to': await textEqualsTo(elements, text, async (el) => await el.click()); break;
+	case 'equals to ignore case': await textEqualsToIgnoreCase(elements, text, async (el) => await el.click()); break;
+	case 'equals to ignore spaces': await textEqualsToIgnoreSpaces(elements, text, async (el) => await el.click()); break;
+	case 'contains': await textContains(elements, text, async (el) => await el.click()); break;
+	case 'contains ignore spaces': await textContainsIgnoreCase(elements, text, async (el) => await el.click()); break;
+	case 'contains ignore case': await textContainsIgnoreSpaces(elements, text, async (el) => await el.click()); break;
+	}
 };

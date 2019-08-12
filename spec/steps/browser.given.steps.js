@@ -16,6 +16,7 @@ Given(/^opened page path '(.*)'$/, async (path) => {
 		scope.page.setViewport({width: getBrowserWidth(), height: getBrowserHeight()});
 	}
 
+	log.debug(`open page url 'https://${process.env.BASE_URL + path}'`);
 	await scope.page.goto(process.env.BASE_URL + path);
 });
 
@@ -26,7 +27,8 @@ Given(/^opened page url '(.*)'$/, async (url) => {
 		scope.page.setViewport({width: getBrowserWidth(), height: getBrowserHeight()});
 	}
 
-	await scope.page.goto(url);
+	log.debug(`open page url 'https://${s(url).template(process.env).s}'`);
+	await scope.page.goto(s(url).template(process.env).s);
 });
 
 Given(/^started listen web-page '(request|pageerror|response)' resourse$/, (event) => startListenEvent(event));
