@@ -6,11 +6,10 @@ const scope = require('../support/scope'),
 	validator = createValidator(),
 	{compare} = require('../support/image'),
 	fs = require('fs'),
-	_ = require('underscore'),
 	{log} = require('../support/log');
 
 exports.validateAmp = async () => {
-	let url = await scope.page.url();
+	let url = await scope.browser.page.url();
 
 	const results = await validator(function* () {
 		yield url;
@@ -32,27 +31,9 @@ exports.checkPageScreen = async (fullPage, key) => {
 
 	if (fs.existsSync(imagePath)) {
 		log.debug('Image Exist at: ' + imagePath);
-		await compare(await scope.page.screenshot(), fs.readFileSync(imagePath));
+		await compare(await scope.browser.page.screenshot(), fs.readFileSync(imagePath));
 	} else {
 		log.debug('Image Created at: ' + imagePath);
-		await scope.page.screenshot({path: imagePath, fullPage: fullPage});
-	}
-};
-
-exports.checkCookieValue = async (name, value, eql) => {
-	let cookies = await scope.page.cookies();
-	if (eql) {
-		scope.expect(_.findWhere(cookies, {name: name}).value).to.eql(value);
-	} else {
-		scope.expect(_.findWhere(cookies, {name: name}).value).to.not.eql(value);
-	}
-};
-
-exports.checkCookieExists = async (name, exists) => {
-	let cookies = await scope.page.cookies();
-	if (exists) {
-		scope.expect(_.findWhere(cookies, {name: name}), `Cookie '${name}' does not exists.`).to.not.equal(undefined);
-	} else {
-		scope.expect(_.findWhere(cookies, {name: name}), `Cookie '${name}' exists.`).to.equal(undefined);
+		await scope.browser.page.screenshot({path: imagePath, fullPage: fullPage});
 	}
 };

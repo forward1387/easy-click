@@ -20,13 +20,13 @@ exports.getDevice = () => {
 };
 
 exports.getBrowserWidth = () => {
-	let width = process.env.BROWSER_WIDTH || '1024';
+	let width = process.env.BROWSER_WIDTH || '1440';
 	log.debug(`export BROWSER_WIDTH=${width}`);
 	return Number(width);
 };
 
 exports.getBrowserHeight = () => {
-	let height = process.env.BROWSER_HEIGHT || '1440';
+	let height = process.env.BROWSER_HEIGHT || '1240';
 	log.debug(`export BROWSER_HEIGHT=${height}`);
 	return Number(height);
 };
