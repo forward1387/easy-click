@@ -19,7 +19,7 @@ When(/^I click on '(.*)' element with '(.*)' text$/
 When(/^I click on '(.*)' element with text from local storage '(.*)'$/
 	, async (selector, key) => scope.browser.clickText(selector, await scope.browser.localStorage.getItem(key)));
 
-When(/^I click on '(.*)' text$/
+When(/^I click on the '(.*)' text$/
 	, (text) => scope.browser.clickText(text));
 
 When(/^I click on text from local storage '(.*)'$/

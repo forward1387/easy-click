@@ -30,5 +30,5 @@ After(async (scenario) => {
 });
 
 AfterAll(async () => {
-	if (scope.browser) await scope.browser.stop();
+	if (scope.browser) await scope.browser.close();
 });

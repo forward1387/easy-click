@@ -63,7 +63,7 @@ npm run report
 * ```When I click on '<xpath|css>' element with (\d*) index```
 * ```When I click on '<xpath|css>' element with '<text>' text```
 * ```When I click on '<xpath|css>' element with text from local storage '<local-storage-key>'```
-* ```When I click on '<text>' text```
+* ```When I click on the '<text>' text```
 * ```When I click on text from local storage '<local-storage-key>'```
 * ```When I click on '<text>' text with (\d*) index```
 * ```When I click on '<xpath|css>' element and wait for navigation```

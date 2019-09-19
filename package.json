@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "audit": "npm run audit fix --force",
     "eslint": "./node_modules/.bin/eslint '**/*.js' --ignore-pattern '!.eslintrc.js' --fix",
-    "pretest": "npm install && npm run audit && npm run eslint && mkdirp ./reports",
+    "pretest": "npm install && npm run eslint && mkdirp ./reports",
     "test": "./node_modules/.bin/cucumber-js ./features/**/*.feature -r ./spec -f json:reports/report.json",
     "debug": "node --nolazy --inspect-brk=9229 ./node_modules/.bin/cucumber-js ./features/**/*.feature -r ./spec -f json:reports/report.json",
     "report": "node report.js"
@@ -17,7 +16,6 @@
     "wendigo"
   ],
   "pre-commit": [
-    "audit",
     "eslint"
   ],
   "author": "Yuriy Oprysk (yuriy.oprysk@gmail.com)",
