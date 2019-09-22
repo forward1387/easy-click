@@ -129,4 +129,32 @@ npm run report
 #### When
 
 * ```When I clear console```
-* 
+
+#### Then
+
+* ```When I expect that at least one console event with '<text>' text and '(log|debug|info|error|warning|trace)' type```
+
+### Resource Requests(Response) Steps
+#### When
+
+* ```When I clear the list of requests```
+* ```When I wait until a request with '<url>' url is done```
+* ```When I wait until a response with '<url>' url is done```
+
+#### Then
+
+* ```Then I expect that at least one resource requests made to '<url>' url```
+* ```Then I expect that at least one resource requests made with '(GET|POST|PUT|DELETE)' method```
+* ```Then I expect that a response was received with the (\d*) status```
+* ```Then I expect that a response was received with the '{"content-type": /html/}' headers```
+* ```Then I expect that a request contains the '{"status": "OK"}' post body```
+* ```Then I expect that a response contains the '{"status": "OK"}' body```
+* ```Then I expect that at least one request is still pending```
+
+### Dialogs Steps
+#### When
+
+* ```When I dismiss the dialog```
+* ```When I wait until the next dialog```
+* ```When I accept the dialog```
+* ```When I accept the '<text>' text dialog```

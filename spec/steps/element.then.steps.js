@@ -1,7 +1,8 @@
 'use strict';
 const { Then } = require('cucumber'),
 	scope = require('../support/scope'),
-	{checkElementScreen} = require('../validators/element.validators');
+	{checkElementScreen, checkElementWidth, checkElementHeight
+		, checkElementWidthOneOf, checkElementHeightOneOf} = require('../validators/element.validators');
 
 Then(/^I expect the '(.*)' element is the same look as (.*) image$/
 	, (locator, key) => checkElementScreen(locator, key));
@@ -85,3 +86,9 @@ Then(/^I expect the '(.*)' element has '(.*)' options$/
 
 Then(/^I expect the '(.*)' element count (\d*) present$/
 	, (selector, count)=> scope.browser.assert.elements(selector, count));
+
+Then(/^I expect the (width|height) of '(.*)' element is one of:$/, (rect, locator, datatable) => (rect === 'width') ? 
+	checkElementWidthOneOf(locator, datatable.raw()[0]) : checkElementHeightOneOf(locator, datatable.raw()[0]));
+
+Then(/^I expect the (width|height) of '(.*)' element is (\d*)$/, (rect, locator, value) => (rect === 'width') ? 
+	checkElementWidth(locator, Number(value)) : checkElementHeight(locator, Number(value)));
