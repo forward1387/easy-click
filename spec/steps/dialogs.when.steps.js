@@ -1,6 +1,7 @@
 'use strict';
 const { When } = require('cucumber'),
 	scope = require('../support/scope'),
+	{injectString} = require('../helpers/string.helper'),
 	{getTimeout} = require('../support/conf');
 
 When(/^I dismiss the dialog$/
@@ -13,4 +14,4 @@ When(/^I accept the dialog$/
 	, () => scope.browser.dialog.accept());
 
 When(/^I accept the '(.*)' text dialog$/
-	, (text) => scope.browser.dialog.accept(text));
+	, async (text) => scope.browser.dialog.accept(await injectString(text)));

@@ -3,6 +3,7 @@
 const { When} = require('cucumber'),
 	s = require('string'),
 	{getTimeout} = require('../support/conf'),
+	{injectString} = require('../helpers/string.helper'),
 	scope = require('../support/scope');
 
 When(/^I wait a (\d*) seconds$/
@@ -15,10 +16,7 @@ When(/^I wait for '(.*)' url$/
 	, (url) => scope.browser.waitForUrl(s(url).template(process.env).s, getTimeout()));
 
 When(/^I wait for '(.*)' text$/
-	, (text) => scope.browser.waitForText(s(text).template(process.env).s, getTimeout()));
-
-When(/^I wait for text from local storage '(.*)'$/
-	, async (key) => scope.browser.waitForText(await scope.browser.localStorage.getItem(key), getTimeout()));
+	, async (text) => scope.browser.waitForText(await injectString(text), getTimeout()));
 
 When(/^I wait for page to load$/
 	, () => scope.browser.waitForPageLoad(getTimeout()));

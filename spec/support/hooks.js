@@ -1,21 +1,28 @@
 'use strict';
 
 const { After, Before, AfterAll } = require('cucumber'),
-	{isHeadless, getBrowserWidth, getBrowserHeight, getTimeout} = require('../support/conf'),
+	{isHeadless, getBrowserWidth, getBrowserHeight
+		, getTimeout, isDevice, getDevice} = require('../support/conf'),
 	scope = require('./scope'),
+	devices = require('puppeteer/DeviceDescriptors'),
 	Wendigo = require('wendigo');
 
 Before(async () => {
 	if (!scope.browser) {
-		scope.browser = await Wendigo.createBrowser({
+		let config = {
 			headless: isHeadless(),
 			incognito: false,
 			defaultTimeout: getTimeout(),
 			args: ['--no-sandbox'
 				, '--disable-setuid-sandbox'
 				, `--window-size=${getBrowserWidth()},${getBrowserHeight()}`]
-		
-		});
+		};
+	
+		if (isDevice()) {
+			config['userAgent'] = devices[getDevice()].userAgent;
+		}
+
+		scope.browser = await Wendigo.createBrowser(config);
 	}
 });
 

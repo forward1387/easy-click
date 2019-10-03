@@ -2,6 +2,7 @@
 const { When } = require('cucumber'),
 	scope = require('../support/scope'),
 	wait = require('wait-promise'),
+	{injectString} = require('../helpers/string.helper'),
 	{scrollToElement, scrollToElementAndWait} = require('../actions/element.actions');
 
 When(/^I click on '(.*)' element$/
@@ -14,16 +15,10 @@ When(/^I click on '(.*)' element with (\d*) index$/
 	, (selector, index) => scope.browser.click(selector, index));
 
 When(/^I click on '(.*)' element with '(.*)' text$/
-	, (selector, text) => scope.browser.clickText(selector, text));
-
-When(/^I click on '(.*)' element with text from local storage '(.*)'$/
-	, async (selector, key) => scope.browser.clickText(selector, await scope.browser.localStorage.getItem(key)));
+	, async (selector, text) => scope.browser.clickText(selector, await injectString(text)));
 
 When(/^I click on the '(.*)' text$/
-	, (text) => scope.browser.clickText(text));
-
-When(/^I click on text from local storage '(.*)'$/
-	, async (key) => scope.browser.clickText(await scope.browser.localStorage.getItem(key)));
+	, async (text) => scope.browser.clickText(await injectString(text)));
 
 When(/^I click on '(.*)' text with (\d*) index$/
 	, (text, index) => scope.browser.clickText(text, index));
@@ -40,13 +35,10 @@ When(/^I scroll to '(.*)' element and wait (\d*) seconds$/
 	, (selector, timeout) => scrollToElementAndWait(selector, timeout * 1000));
 
 When(/^I type '(.*)' value into '(.*)' element$/
-	, (value, selector) => scope.browser.type(selector, value));
-
-When(/^I type into '(.*)' element value from local storage '(.*)'$/
-	, async (selector, key) => scope.browser.type(selector, await scope.browser.localStorage.getItem(key)));
+	, async (value, selector) => scope.browser.type(selector, await injectString(value)));
 
 When(/^I type '(.*)' value into '(.*)' element with delay (\d*) ms for each key press$/
-	, (value, selector, timeout) => scope.browser.type(selector, value, {delay: timeout}));
+	, async (value, selector, timeout) => scope.browser.type(selector, await injectString(value), {delay: timeout}));
 
 When(/^I press the '(.*)' key$/
 	, (key) => scope.browser.keyPress(key));
@@ -70,23 +62,20 @@ When(/^I upload '(.*)' file via '(.*)' element$/
 	, (path, selector) => scope.browser.uploadFile(selector, path));
 	
 When(/^I select '(.*)' value in '(.*)' select$/
-	, (values, selector) => scope.browser.select(selector, values.split(',')));
+	, async (values, selector) => scope.browser.select(selector, (await injectString(values)).split(',')));
 
 When(/^I clear value in '(.*)' element$/
 	, (selector) => scope.browser.clearValue(selector));
 
 When(/^I set '(.*)' attribute '(.*)' value into '(.*)' element$/
-	, (attributeName, value, selector) => scope.browser.setAttribute(selector, attributeName, value));
+	, async (attributeName, value, selector) => scope.browser.setAttribute(selector, await injectString(attributeName), await injectString(value)));
 
 When(/^I (add|remove) '(.*)' class of '(.*)' element$/
-	, (action, className, selector) => (action === 'add')
-		? scope.browser.addClass(selector, className) : scope.browser.removeClass(selector, className));
+	, async (action, className, selector) => (action === 'add')
+		? scope.browser.addClass(selector, await injectString(className)) : scope.browser.removeClass(selector, await injectString(className)));
 
 When(/^I set '(.*)' value into '(.*)' element$/
-	, (value, selector) => scope.browser.setValue(selector, value));
-
-When(/^I set into '(.*)' element value from local storage '(.*)'$/
-	, (value, selector) => scope.browser.setValue(selector, value));
+	, async (value, selector) => scope.browser.setValue(selector, await injectString(value)));
 
 When(/^I trigger '(.*)' event into '(.*)' element$/
-	, (event, selector) => scope.browser.browser.triggerEvent(selector, event));
+	, async (event, selector) => scope.browser.browser.triggerEvent(selector, await injectString(event)));

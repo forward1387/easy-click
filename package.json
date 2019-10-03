@@ -1,6 +1,6 @@
 {
   "name": "easy-click",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
   ],
   "author": "Yuriy Oprysk (yuriy.oprysk@gmail.com)",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "amp-site-validator": "^3.0.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
