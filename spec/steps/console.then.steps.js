@@ -15,3 +15,8 @@ Then(/^I expect that empty event with '(.*)' text and '(log|debug|info|error|war
 		text: await injectString(text),
 		type: scope.browser.console.LogType[type]
 	}, 0));
+
+Then(/^I expect that empty event with '(log|debug|info|error|warning|trace)' type$/
+	, (type) => scope.browser.assert.console({
+		type: scope.browser.console.LogType[type]
+	}, 0));

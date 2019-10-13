@@ -2,15 +2,11 @@
 const scope = require('../support/scope'),
 	wait = require('wait-promise');
 
-exports.scrollToElement = async (locator) => {
-	let element = await scope.browser.page.$(locator);
-	await element.hover();
-	await scope.browser.page.evaluate(element => {
-		element.scrollIntoView();
-	}, element);
+exports.scrollToElement = async (selector) => {
+	await scope.browser.scroll(selector, -50);
 };
 
-exports.scrollToElementAndWait = async (locator, seconds) => {
-	await exports.scrollToElement(locator);
+exports.scrollToElementAndWait = async (selector, seconds) => {
+	await exports.scrollToElement(selector);
 	await wait.sleep(seconds);
 };
