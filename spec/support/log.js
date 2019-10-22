@@ -1,9 +1,16 @@
 'use strict';
-///const {getLogLevel} = require('./conf');
+require('dotenv').config();
+const log4js = require('log4js');
+let logger;
 
-let log = require('logger').createLogger();
-log.setLevel(process.env.LOG_LEVEL || 'debug');
+let getLogger = () => {
+	if(logger) return logger;
 
-log.debug(process.env.LOG_LEVEL);
+	logger = log4js.getLogger();
+	logger.level = (process.env.LOG_LEVEL || 'INFO').toUpperCase();
+	logger.debug(`LOG Level: ${logger.level}`);
 
-exports.log = log; 
+	return logger;
+};
+
+exports.log = getLogger();

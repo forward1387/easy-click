@@ -14,4 +14,4 @@ Feature: Demo feature
         And I expect the '.other-projects' element does not contains 'Free123 {{test}} textbooks' text
         When I click on '.other-project-text' element with 'Commons' text
         And I wait for navigation
-        Then I expect the browser url matches 'https://commons.wikimedia.org/wiki/Main_Page'
+        Then I expect the browser url equal 'https://commons.wikimedia.org/wiki/Main_Page'

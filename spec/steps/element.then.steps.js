@@ -8,6 +8,9 @@ const { Then } = require('cucumber'),
 Then(/^I expect the '(.*)' element is the same look as (.*) image$/
 	, (locator, key) => checkElementScreen(locator, key));
 
+Then(/^I expect the '(.*)' element has look as (.*) image with inconsistency of (\d*) percentage$/
+	, (locator, key, inconsistency) => checkElementScreen(locator, key, inconsistency));
+
 Then(/^I expect the element '(.*)' has '(.*)' value$/
 	, async (selector, value) => scope.browser.assert.value(selector, await injectString(value)));
 

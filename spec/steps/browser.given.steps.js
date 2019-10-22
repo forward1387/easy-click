@@ -15,7 +15,7 @@ Given(/^opened page path '(.*)'$/, async (path) => {
 		viewPort = {width: getBrowserWidth(), height: getBrowserHeight()};
 	}
 
-	log.debug(`open page path 'https://${process.env.BASE_URL + s(path).template(process.env).s}'`);
+	log.debug(`open page path '${process.env.BASE_URL + s(path).template(process.env).s}'`);
 	await scope.browser.open(process.env.BASE_URL + s(path).template(process.env).s, {viewport: viewPort});
 });
 

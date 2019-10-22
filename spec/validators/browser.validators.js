@@ -18,8 +18,8 @@ exports.validateAmp = async () => {
 	scope.expect(results[0].status, JSON.stringify(results[0])).to.eql('PASS');
 };
 
-exports.checkPageScreen = async (fullPage, key) => {
-	log.debug(`Key is ${key}`);
+exports.checkPageScreen = async (fullPage, key, inconsistency=0.1) => {
+	log.debug(`Image Key is ${key}`);
 	log.debug(`Screenshot of full page ${fullPage ? 'yes': 'no'}`);
 	let imagePath;
 	
@@ -31,7 +31,7 @@ exports.checkPageScreen = async (fullPage, key) => {
 
 	if (fs.existsSync(imagePath)) {
 		log.debug('Image Exist at: ' + imagePath);
-		await compare(await scope.browser.page.screenshot(), fs.readFileSync(imagePath));
+		await compare(await scope.browser.page.screenshot(), fs.readFileSync(imagePath), inconsistency);
 	} else {
 		log.debug('Image Created at: ' + imagePath);
 		await scope.browser.page.screenshot({path: imagePath, fullPage: fullPage});

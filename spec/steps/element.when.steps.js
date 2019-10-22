@@ -49,14 +49,14 @@ When(/^I press the '(.*)' key a (\d*) times$/
 When(/^I press the '(.*)' key on the '(.*)' element$/
 	, (key, selector) => scope.browser.focus(selector).then(() => scope.browser.keyPress(key)));
 
-When(/^I hover over '(.*)' element$/
-	, (selector) => scope.browser.hover(selector));
-
-When(/^I focus on '(.*)' element$/
-	, (selector) => scope.browser.focus(selector));
-
-When(/^I blur on '(.*)' element$/
-	, (selector) => scope.browser.blur(selector));
+When(/^I (blur on|focus on|hover over) '(.*)' element$/
+	, (action, selector) => {
+		switch(action) {
+			case 'blur on': return scope.browser.blur(selector);
+			case 'focus on': return scope.browser.focus(selector);
+			case 'hover over': return scope.browser.hover(selector);
+		}
+	});
 
 When(/^I upload '(.*)' file via '(.*)' element$/
 	, (path, selector) => scope.browser.uploadFile(selector, path));
@@ -76,6 +76,18 @@ When(/^I (add|remove) '(.*)' class of '(.*)' element$/
 
 When(/^I set '(.*)' value into '(.*)' element$/
 	, async (value, selector) => scope.browser.setValue(selector, await injectString(value)));
+
+When(/^I set '(.*)' element (value|text) into '(.*)' local storage$/
+	, async (selector, action, key) => scope.browser.localStorage.setItem(key, await scope.browser[action](selector)));
+
+When(/^I set '(.*)' element selected option into '(.*)' local storage$/
+	, async (selector, key) => scope.browser.localStorage.setItem(key, await scope.browser.selectedOptions(selector)));
+
+When(/^I set '(.*)' element options into '(.*)' local storage$/
+	, async (selector, key) => scope.browser.localStorage.setItem(key, await scope.browser.options(selector)));
+
+When(/^I set '(.*)' element attribute '(.*)' value into '(.*)' local storage$/
+	, async (selector, attr, key) => scope.browser.localStorage.setItem(key, await scope.browser.attribute(selector, attr)));
 
 When(/^I trigger '(.*)' event into '(.*)' element$/
 	, async (event, selector) => scope.browser.browser.triggerEvent(selector, await injectString(event)));

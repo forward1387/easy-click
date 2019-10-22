@@ -7,8 +7,8 @@ const scope = require('../support/scope'),
 	S = require('string'),
 	{log} = require('../support/log');
 
-exports.checkElementScreen = async (locator, key) => {
-	log.debug(`Key is ${key}`);
+exports.checkElementScreen = async (locator, key, inconsistency=0.1) => {
+	log.debug(`Image Key is ${key}`);
 	log.debug(`Locator is ${locator}`);
 	let imagePath;
 	
@@ -22,7 +22,7 @@ exports.checkElementScreen = async (locator, key) => {
 
 	if (fs.existsSync(imagePath)) {
 		log.debug('Image Exist: ' + imagePath);
-		await compare(await element.screenshot(), fs.readFileSync(imagePath));
+		await compare(await element.screenshot(), fs.readFileSync(imagePath), inconsistency);
 	} else {
 		log.debug('Image Created: ' + imagePath);
 		await element.screenshot({path: imagePath});

@@ -7,14 +7,14 @@ const {When} = require('cucumber'),
 When(/^I scroll (up|down)$/
 	, (place) => (place === 'up') ? scrollUp() : scrollDown());
 
-When(/^I press back$/
-	, () => scope.browser.back());
-
-When(/^I press forward$/
-	, () => scope.browser.forward());
-
-When(/^I press refresh$/
-	, () => scope.browser.refresh());
+When(/^I press (back|forward|refresh)$/
+	, (action) => {
+		switch(action) {
+		case 'back': return scope.browser.back();
+		case 'forward': return scope.browser.forward();
+		case 'refresh': return scope.browser.refresh();
+		}
+	});
 
 When(/^I set browser view port: '(\d*)' width, '(\d*)' height$/
 	, (width, height) => scope.browser.setViewport({width: Number(width), height: Number(height)}));

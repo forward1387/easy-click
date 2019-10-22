@@ -17,11 +17,6 @@ const World = function({attach, parameters}) {
 	scope.chai = chai;
 	scope.expect = chai.expect;
 	require('dotenv').config();
-	scope.events = {
-		request: [],
-		response:[],
-		pageerror: []
-	};
 	global.scope = scope;
 	setDefaultTimeout(getTimeout());
 };

@@ -1,6 +1,6 @@
 {
   "name": "easy-click",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -31,7 +31,7 @@
     "cucumber-html-reporter": "^5.0.0",
     "dotenv": "^8.0.0",
     "eslint": "^5.16.0",
-    "logger": "0.0.1",
+    "log4js": "^5.2.2",
     "mkdirp": "^0.5.1",
     "node-resemble-js": "^0.2.0",
     "pngjs": "^3.4.0",

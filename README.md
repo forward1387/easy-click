@@ -22,9 +22,7 @@ npm run report
 
 #### When
 
-* ```When I press back```
-* ```When I press forward```
-* ```When I press refresh```
+* ```When I press (back|forward|refresh)```
 * ```When I scroll (up|down)```
 * ```When I set browser view port: '(\d*)' width, '(\d*)' height```
 * ```When I set key='<local-storage-key>', value='<local-storage-value>' in local storage```
@@ -33,10 +31,11 @@ npm run report
 
 #### Then
 
-* ```Then I expect the browser url matches '<url>'```
-* ```Then I expect the page title match '<title>'```
+* ```Then I expect the browser url (matches|equal|contains|start with|end with) '<value>'```
+* ```Then I expect the page title (matches|equal|equal ignore case|equal ignore spaces|contains|contain ignore case|contain ignore spaces|start with|end with) '<title>'```
 * ```Then I expect the page source is amp```
 * ```Then I expect the (viewport|full) page is the same look as '<expected-image-name>' image```
+* ```Then I expect the (viewport|full) page has look as '<expected-image-name>' image with inconsistency of (\d*) percentage```
 
 ### Cookie Steps
 #### When
@@ -59,7 +58,6 @@ npm run report
 * ```When I click on '<xpath|css>' element with (\d*) index```
 * ```When I click on '<xpath|css>' element with '<text>' text```
 * ```When I click on the '<text>' text```
-* ```When I click on text from local storage '<local-storage-key>'```
 * ```When I click on '<text>' text with (\d*) index```
 * ```When I click on '<xpath|css>' element and wait for navigation```
 * ```When I wait and click on '<xpath|css>' element```
@@ -68,16 +66,17 @@ npm run report
 * ```When I press the '<key>' key```
 * ```When I press the '<key>' key a (\d*) times```
 * ```When I press the '<key>' key on the '<xpath|css>' element```
-* ```When I hover over '<xpath|css>' element```
-* ```When I focus on '<xpath|css>' element```
-* ```When I blur on '<xpath|css>' element```
+* ```When I (blur on|focus on|hover over) '<xpath|css>' element```
 * ```When I upload '<file-path>' file via '<xpath|css>' element```
 * ```When I select '<value>' value in '<xpath|css>' select```
 * ```When I clear value in '<xpath|css>' element```
 * ```When I set '<attr-name>' attribute '<attr-value>' value into '<xpath|css>' element```
 * ```When I (add|remove) '<class-value>' class of '<xpath|css>' element```
 * ```When I set '<value>' value into '<xpath|css>' element```
-* ```When I set into '<xpath|css>' element value from local storage '<local-storage-key>'```
+* ```When I set '<xpath|css>' element (value|text) into '<local-storage-key>' local storage```
+* ```When I set '<xpath|css>' element attribute '<attribute-name>' value into '<local-storage-key>' local storage```
+* ```When I set '<xpath|css>' element selected option into '<local-storage-key>' local storage```
+* ```When I set '<xpath|css>' element options into '<local-storage-key>' local storage```
 * ```When I trigger '<event-name>' event into '<xpath|css>' element```
 * ```When I scroll to '<css>' element```
 * ```When I scroll to '<css>' element and wait (\d*) seconds```
@@ -85,6 +84,7 @@ npm run report
 #### Then
 
 * ```Then I expect the '<css>' element is the same look as <image-name> image```
+* ```Then I expect the '<css>' element has look as <image-name> image with inconsistency of (\d*) percentage```
 * ```Then I expect the element '<xpath|css>' has '<value>' value```
 * ```Then I expect the '<xpath|css>' element is( not)? visible```
 * ```Then I expect the element '<xpath|css>' is( not)? checked```
