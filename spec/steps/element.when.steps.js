@@ -52,9 +52,9 @@ When(/^I press the '(.*)' key on the '(.*)' element$/
 When(/^I (blur on|focus on|hover over) '(.*)' element$/
 	, (action, selector) => {
 		switch(action) {
-			case 'blur on': return scope.browser.blur(selector);
-			case 'focus on': return scope.browser.focus(selector);
-			case 'hover over': return scope.browser.hover(selector);
+		case 'blur on': return scope.browser.blur(selector);
+		case 'focus on': return scope.browser.focus(selector);
+		case 'hover over': return scope.browser.hover(selector);
 		}
 	});
 
