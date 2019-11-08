@@ -29,3 +29,7 @@ When(/^I (select|close) (\d*) page$/
 When(/^I (set|clear) cache$/
 	, (action) => (action === 'set') ? scope.browser.setCache(true)
 		: scope.browser.setCache(false));
+
+When(/^I clear all the request mocks$/, () => scope.browser.requests.clearMocks());
+
+When(/^I remove a request '(.*)' url mock$/, (url) => scope.browser.requests.removeMock(url));

@@ -2,7 +2,8 @@
 
 const { After, Before, AfterAll } = require('cucumber'),
 	{isHeadless, getBrowserWidth, getBrowserHeight
-		, getTimeout, isDevice, getDevice} = require('../support/conf'),
+		, getTimeout, isDevice, getDevice, getCloseAfterEach
+		, getIgnoreHttpsErrors} = require('../support/conf'),
 	scope = require('./scope'),
 	devices = require('puppeteer/DeviceDescriptors'),
 	Wendigo = require('wendigo');
@@ -13,6 +14,7 @@ Before(async () => {
 			headless: isHeadless(),
 			incognito: false,
 			defaultTimeout: getTimeout(),
+			ignoreHTTPSErrors: getIgnoreHttpsErrors(),
 			args: ['--no-sandbox'
 				, '--disable-setuid-sandbox'
 				, `--window-size=${getBrowserWidth()},${getBrowserHeight()}`]
@@ -33,6 +35,11 @@ After(async (scenario) => {
 		} else if (scope.browser) {
 			scope.attach(await scope.browser.screenshot(), 'image/png');
 		}
+	}
+
+	if(getCloseAfterEach()) {
+		await scope.browser.close();
+		scope.browser = undefined;
 	}
 });
 

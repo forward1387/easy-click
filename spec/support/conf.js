@@ -42,3 +42,15 @@ exports.getTimeout = () => {
 	log.debug(`TIMEOUT=${timeout}`);
 	return timeout;
 };
+
+exports.getIgnoreHttpsErrors = () => {
+	let ignore = JSON.parse(process.env.IGNORE_HTTPS_ERRORS || 'false');
+	log.debug(`IGNORE_HTTPS_ERRORS=${ignore}`);
+	return ignore;
+};
+
+exports.getCloseAfterEach = () => {
+	let close = JSON.parse(process.env.CLOSE_AFTER_EACH || 'false');
+	log.debug(`CLOSE_AFTER_EACH=${close}`);
+	return close;
+};

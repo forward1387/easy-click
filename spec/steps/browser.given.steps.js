@@ -30,3 +30,5 @@ Given(/^opened page url '(.*)'$/, async (url) => {
 	log.debug(`open page url '${s(url).template(process.env).s}'`);
 	await scope.browser.open(s(url).template(process.env).s, {viewport: viewPort});
 });
+
+Given(/^mock the requests to an '(.*)' url with '(.*)' data $/, (url, data) => scope.browser.requests.mock(url, {body: data}));
