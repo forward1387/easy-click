@@ -19,6 +19,9 @@ npm run report
 
 * ```Given opened page path '<url-path>'```
 * ```Given opened page url '<url>'```
+* ```Given mock the requests to an '(.*)' url with '(.*)' data```
+* ```Given mock the requests to an '(.*)' url regexp with '(.*)' data```
+* 
 
 #### When
 
@@ -140,6 +143,7 @@ npm run report
 * ```Then I expect that a request contains the '{"status": "OK"}' post body```
 * ```Then I expect that a response contains the '{"status": "OK"}' body```
 * ```Then I expect that at least one request is still pending```
+* ```Then I expect that requests with the (\d*) status does not exist```
 
 ### Dialogs Steps
 #### When

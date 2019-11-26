@@ -25,3 +25,6 @@ Then(/^I expect that a response contains the '(.*)' body$/
 
 Then(/^I expect that at least one request is still pending$/
 	, () => scope.browser.assert.requests.pending());
+
+Then(/^I expect that requests with the (\d*) status does not exist$/
+	, (status) => scope.browser.assert.requests.status(status).exactly(0));
