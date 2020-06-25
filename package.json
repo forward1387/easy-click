@@ -1,6 +1,6 @@
 {
   "name": "easy-click",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -41,6 +41,6 @@
     "string": "^3.3.3",
     "underscore": "^1.9.1",
     "wait-promise": "^0.4.1",
-    "wendigo": "^2.9.0"
+    "wendigo": "latest"
   }
 }

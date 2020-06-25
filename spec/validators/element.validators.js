@@ -3,9 +3,31 @@ const scope = require('../support/scope'),
 	{getDevice, isDevice, getBrowserWidth, getBrowserHeight, getImageLocationAbsolutePath} = require('../support/conf'),
 	fs = require('fs'),
 	_ = require('underscore'),
-	{compare} = require('../support/image'),
+	{compare, compareIgnoreColors} = require('../support/image'),
 	S = require('string'),
 	{log} = require('../support/log');
+
+exports.checkElementScreen = async (locator, key, inconsistency) => {
+	log.debug(`Image Key is ${key}`);
+	log.debug(`Locator is ${locator}`);
+	let imagePath;
+	
+	if(isDevice()) {
+		imagePath = `${getImageLocationAbsolutePath()}/${key}-${getDevice()}.png`;
+	} else {
+		imagePath = `${getImageLocationAbsolutePath()}/${key}-${getBrowserWidth()}x${getBrowserHeight()}.png`;
+	}
+
+	let element = await scope.browser.page.$(locator);
+
+	if (fs.existsSync(imagePath)) {
+		log.debug('Image Exist: ' + imagePath);
+		await compare(await element.screenshot(), fs.readFileSync(imagePath), inconsistency);
+	} else {
+		log.debug('Image Created: ' + imagePath);
+		await element.screenshot({path: imagePath});
+	}
+};
 
 exports.checkElementScreen = async (locator, key, inconsistency=0.1) => {
 	log.debug(`Image Key is ${key}`);
@@ -23,6 +45,28 @@ exports.checkElementScreen = async (locator, key, inconsistency=0.1) => {
 	if (fs.existsSync(imagePath)) {
 		log.debug('Image Exist: ' + imagePath);
 		await compare(await element.screenshot(), fs.readFileSync(imagePath), inconsistency);
+	} else {
+		log.debug('Image Created: ' + imagePath);
+		await element.screenshot({path: imagePath});
+	}
+};
+
+exports.checkElementScreenIgnoreColors = async (locator, key, inconsistency=0.1) => {
+	log.debug(`Image Key is ${key}`);
+	log.debug(`Locator is ${locator}`);
+	let imagePath;
+	
+	if(isDevice()) {
+		imagePath = `${getImageLocationAbsolutePath()}/${key}-${getDevice()}.png`;
+	} else {
+		imagePath = `${getImageLocationAbsolutePath()}/${key}-${getBrowserWidth()}x${getBrowserHeight()}.png`;
+	}
+
+	let element = await scope.browser.page.$(locator);
+
+	if (fs.existsSync(imagePath)) {
+		log.debug('Image Exist: ' + imagePath);
+		await compareIgnoreColors(await element.screenshot(), fs.readFileSync(imagePath), inconsistency);
 	} else {
 		log.debug('Image Created: ' + imagePath);
 		await element.screenshot({path: imagePath});

@@ -39,10 +39,14 @@ After(async (scenario) => {
 
 	if(getCloseAfterEach()) {
 		await scope.browser.close();
+		await Wendigo.stop();
 		scope.browser = undefined;
 	}
 });
 
 AfterAll(async () => {
 	if (scope.browser) await scope.browser.close();
+
+	await Wendigo.stop();
+	scope.browser = undefined;
 });

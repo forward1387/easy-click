@@ -2,7 +2,7 @@
 const { Then } = require('cucumber'),
 	scope = require('../support/scope'),
 	{injectString} = require('../helpers/string.helper'),
-	{checkElementScreen, checkElementWidth, checkElementHeight
+	{checkElementScreen, checkElementWidth, checkElementHeight, checkElementScreenIgnoreColors
 		, checkElementWidthOneOf, checkElementHeightOneOf} = require('../validators/element.validators');
 
 Then(/^I expect the '(.*)' element is the same look as (.*) image$/
@@ -10,6 +10,9 @@ Then(/^I expect the '(.*)' element is the same look as (.*) image$/
 
 Then(/^I expect the '(.*)' element has look as (.*) image with inconsistency of (\d*) percentage$/
 	, (locator, key, inconsistency) => checkElementScreen(locator, key, inconsistency));
+
+Then(/^I expect the '(.*)' element has look as (.*) image with ignore colors$/
+	, (locator, key) => checkElementScreenIgnoreColors(locator, key));
 
 Then(/^I expect the element '(.*)' has '(.*)' value$/
 	, async (selector, value) => scope.browser.assert.value(selector, await injectString(value)));
