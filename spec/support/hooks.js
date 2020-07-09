@@ -5,7 +5,7 @@ const { After, Before, AfterAll } = require('cucumber'),
 		, getTimeout, isDevice, getDevice, getCloseAfterEach
 		, getIgnoreHttpsErrors} = require('../support/conf'),
 	scope = require('./scope'),
-	devices = require('puppeteer/DeviceDescriptors'),
+	{getMobileDevice} = require('../devices'),
 	Wendigo = require('wendigo');
 
 Before(async () => {
@@ -21,7 +21,7 @@ Before(async () => {
 		};
 	
 		if (isDevice()) {
-			config['userAgent'] = devices[getDevice()].userAgent;
+			config['userAgent'] = getMobileDevice(getDevice()).userAgent;
 		}
 
 		scope.browser = await Wendigo.createBrowser(config);

@@ -4,13 +4,13 @@ const { Given} = require('cucumber'),
 	scope = require('../support/scope'),
 	s = require('string'),
 	{isDevice, getDevice, getBrowserWidth, getBrowserHeight} = require('../support/conf'),
-	devices = require('puppeteer/DeviceDescriptors'),
+	{getMobileDevice} = require('../devices'),
 	{log} = require('../support/log');
 
 Given(/^opened page path '(.*)'$/, async (path) => {
 	let viewPort;
 	if (isDevice()) {
-		viewPort = devices[getDevice()].viewport;
+		viewPort = getMobileDevice[getDevice()].viewport;
 	} else {
 		viewPort = {width: getBrowserWidth(), height: getBrowserHeight()};
 	}
@@ -22,7 +22,7 @@ Given(/^opened page path '(.*)'$/, async (path) => {
 Given(/^opened page url '(.*)'$/, async (url) => {
 	let viewPort;
 	if (isDevice()) {
-		viewPort = devices[getDevice()].viewport;
+		viewPort = getMobileDevice(getDevice()).viewport;
 	} else {
 		viewPort = {width: getBrowserWidth(), height: getBrowserHeight()};
 	}

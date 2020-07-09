@@ -13,7 +13,6 @@ chai.use(require('chai-subset'));
 const World = function({attach, parameters}) {
 	scope.attach = attach;
 	scope.parameters = parameters;
-	scope.puppeteer = require('puppeteer');
 	scope.chai = chai;
 	scope.expect = chai.expect;
 	require('dotenv').config();
