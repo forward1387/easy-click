@@ -17,6 +17,7 @@ Before(async () => {
 			ignoreHTTPSErrors: getIgnoreHttpsErrors(),
 			args: ['--no-sandbox'
 				, '--disable-setuid-sandbox'
+				, '--disable-dev-shm-usage'
 				, `--window-size=${getBrowserWidth()},${getBrowserHeight()}`]
 		};
 	
