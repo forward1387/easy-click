@@ -67,3 +67,5 @@ reports/
 images/
 
 package-lock.json
+
+test-run.sh

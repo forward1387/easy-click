@@ -5,6 +5,8 @@ const scope = require('../support/scope'),
 	_ = require('underscore'),
 	{compare, compareIgnoreColors} = require('../support/image'),
 	S = require('string'),
+	PNGImage = require('pngjs-image'),
+	PNG = require('pngjs').PNG,
 	{log} = require('../support/log');
 
 exports.checkElementScreen = async (locator, key, inconsistency) => {
@@ -70,6 +72,48 @@ exports.checkElementScreenIgnoreColors = async (locator, key, inconsistency=0.1)
 	} else {
 		log.debug('Image Created: ' + imagePath);
 		await element.screenshot({path: imagePath});
+	}
+};
+
+exports.checkElementScreenWithExcludes = async (locator, key, excludes) => {
+	log.debug(`Image Key is ${key}`);
+	log.debug(`Locator is ${locator}`);
+	let imagePath;
+	
+	if(isDevice()) {
+		imagePath = `${getImageLocationAbsolutePath()}/${key}-${getDevice()}.png`;
+	} else {
+		imagePath = `${getImageLocationAbsolutePath()}/${key}-${getBrowserWidth()}x${getBrowserHeight()}.png`;
+	}
+
+	let element = await scope.browser.page.$(locator);
+
+	let screenshot = await element.screenshot();
+	let image = PNGImage.loadImageSync(Buffer.from(screenshot, 'base64'));
+
+	const rect = await scope.browser.page.evaluate((el) => {
+		const {top, left, bottom, right} = el.getBoundingClientRect();
+		return {top, left, bottom, right};
+	}, element);
+
+	for(let lc of excludes) {
+		let el = await scope.browser.page.$(`${locator} ${lc}`);
+		const elrect = await scope.browser.page.evaluate((el) => {
+			const {top, left, bottom, right} = el.getBoundingClientRect();
+			return {top, left, bottom, right};
+		}, el);
+
+		log.debug(`x: ${elrect.left - rect.left}, y: ${elrect.top - rect.top}, width: ${elrect.right - elrect.left}, heigth: ${elrect.bottom - elrect.top}`);
+		image.fillRect(elrect.left - rect.left, elrect.top - rect.top, elrect.right - elrect.left, elrect.bottom - elrect.top, { red:0, green:0, blue:0});
+	}	
+
+	if (fs.existsSync(imagePath)) {
+		log.debug('Image Exist: ' + imagePath);
+		await compare(PNG.sync.write(image.getImage(), {}), fs.readFileSync(imagePath), 0.1);
+	} else {
+		log.debug('Image Created: ' + imagePath);
+		let buffer = PNG.sync.write(image.getImage(), {});
+		fs.writeFileSync(imagePath, buffer);
 	}
 };
 

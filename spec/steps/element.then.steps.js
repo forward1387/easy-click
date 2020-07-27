@@ -2,11 +2,14 @@
 const { Then } = require('cucumber'),
 	scope = require('../support/scope'),
 	{injectString} = require('../helpers/string.helper'),
-	{checkElementScreen, checkElementWidth, checkElementHeight, checkElementScreenIgnoreColors
+	{checkElementScreen, checkElementScreenWithExcludes, checkElementWidth, checkElementHeight, checkElementScreenIgnoreColors
 		, checkElementWidthOneOf, checkElementHeightOneOf} = require('../validators/element.validators');
 
 Then(/^I expect the '(.*)' element is the same look as (.*) image$/
 	, (locator, key) => checkElementScreen(locator, key));
+
+Then(/^I expect the '(.*)' element is the same look as (.*) image except sub-elements '(.*)'$/
+	, (locator, key, childElements) => checkElementScreenWithExcludes(locator, key, childElements.split('|')));
 
 Then(/^I expect the '(.*)' element has look as (.*) image with inconsistency of (\d*) percentage$/
 	, (locator, key, inconsistency) => checkElementScreen(locator, key, inconsistency));
