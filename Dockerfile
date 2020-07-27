@@ -15,6 +15,8 @@ WORKDIR /easy-click
 # Installs your up (it must have Wendigo as a dependency)
 RUN npm install
 
+RUN ls /lib/x86_64-linux-gnu
+
 EXPOSE 8084
 # Runs your tests
 CMD ["npm", "run", "test"]
