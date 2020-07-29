@@ -7,7 +7,7 @@ Feature: Demo feature
         And I wait for '//input[@type="search"]' element
         And I wait a 10 seconds
         Then I expect the browser url matches 'https://www.wikipedia.org/'
-        And I expect the '#searchInput' element is the same look as search image
+        And I expect the '#search-form' element is the same look as search image except sub-elements '#jsLangLabel'
         When I set key='test', value='test' in local storage
         And I type 'Free123 {{test}} textbooks' value into '#searchInput' element
         And I wait a 10 seconds

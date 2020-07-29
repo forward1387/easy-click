@@ -102,9 +102,9 @@ exports.checkElementScreenWithExcludes = async (locator, key, excludes) => {
 			const {top, left, bottom, right} = el.getBoundingClientRect();
 			return {top, left, bottom, right};
 		}, el);
-
-		log.debug(`x: ${elrect.left - rect.left}, y: ${elrect.top - rect.top}, width: ${elrect.right - elrect.left}, heigth: ${elrect.bottom - elrect.top}`);
-		image.fillRect(elrect.left - rect.left, elrect.top - rect.top, elrect.right - elrect.left, elrect.bottom - elrect.top, { red:0, green:0, blue:0});
+		
+		log.debug(`x: ${Math.round(elrect.left - rect.left)}, y: ${Math.round(elrect.top - rect.top)}, width: ${Math.round(elrect.right - elrect.left)}, heigth: ${Math.round(elrect.bottom - elrect.top)}`);
+		image.fillRect(Math.round(elrect.left - rect.left), Math.round(elrect.top - rect.top), Math.round(elrect.right - elrect.left), Math.round(elrect.bottom - elrect.top), { red:0, green:0, blue:0});
 	}	
 
 	if (fs.existsSync(imagePath)) {
